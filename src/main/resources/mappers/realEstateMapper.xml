@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.quiz.lesson03.dao.RealEstateMapper">
+ 	<update id="realEstateById" parameterType="map">
+ 		UPDATE `real_estate`
+ 		SET
+ 			`type` = #{type}
+ 			, `price = #{price}
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{id}	
+ 	</update>	
+ 	
+ 	<delete id ="deleteRealEstateById" parameterType="int">
+ 		DELETE
+ 		FROM
+ 			`real_estate`
+ 		WHERE
+ 			`id` = #{id}
+ 	</delete>	 
+ </mapper>
