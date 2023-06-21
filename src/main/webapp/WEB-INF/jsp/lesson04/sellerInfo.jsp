@@ -12,9 +12,9 @@
 <body>
 	<div class="container">
 		<h1>판매자 정보</h1>
-		<img src="${result.profileImageUrl}" alt="이미지" width="250">
-		<div>${result.nickname}</div>
-		<div class="text-warning">${result.temperature}</div>
+		<img src="${result.profileImageUrl}" alt="프로필이미지" width="250" height="250">
+		<div class="display-3">${result.nickname}</div>
+		<div class="display-4 text-warning font-weight-bold">${result.temperature}</div>
 	</div>
 </body>
 </html>
