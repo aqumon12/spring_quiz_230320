@@ -1,0 +1,14 @@
+@charset "UTF-8";
+#wrap {width:1200px;}
+nav {background-color:cornflowerblue}
+.contents {height:1000px;}
+
+footer {height:100px;}
+
+.nav-link {font-weight: bold; color:white; font-size: 20px;}
+
+.input-label {
+    width:130px;
+    text-align: right;
+    margin-right:10px;
+}
