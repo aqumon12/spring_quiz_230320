@@ -5,7 +5,14 @@
  <mapper namespace="com.quiz.lesson02.dao.StoreMapper">
  	<select id="selectStoreList" resultType="com.quiz.lesson02.domain.Store">
  		SELECT
- 			*
+ 			`id`
+			, `name`
+			, `phoneNumber`
+			, `address`
+			, `businessNumber`
+			, `introduce`
+			, `createdAt`
+			, `updatedAt`
  		FROM
  			`store`
  	</select>

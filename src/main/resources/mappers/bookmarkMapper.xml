@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.quiz.lesson06.dao.BookmarkMapper">
+ 	<select id="selectBookmark" resultType="com.quiz.lesson06.domain.Bookmark">
+ 		SELECT
+ 			`id`
+			, `name`
+			, `url`
+			, `createdAt`
+			, `updateAt`
+		FROM
+			`webpage_bookmark`
+ 	</select>
+ 	
+ 	<insert id="insertBookmark" parameterType="map">
+ 		INSERT INTO	`webpage_bookmark`
+ 		(
+ 			 `name`
+			, `url`
+			, `createdAt`
+			, `updateAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{name}
+ 			, #{url}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ </mapper>
