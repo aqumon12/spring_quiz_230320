@@ -27,14 +27,44 @@
 		</div>
 		<div class="form-group">
 			<div>주소</div>
-			<input type="text" class="form-control" id="url">
+			<div class="d-flex">
+				<input type="text" class="form-control col-10" id="url">
+				<button type="button" id="urlCheckBtn" class="btn btn-primary ml-3">중복확인</button>
+			</div>
+			<small id="urlStatusArea"></small>
 		</div>
-		<input type="button" id="joinBtn" class="btn btn-success w-100" value="추가">
+		<input type="button" id="addBookmarkBtn" class="btn btn-success btn-block" value="추가">
 	</div>
 	
 <script>
 	$(document).ready(function() {
-		$('#joinBtn').on('click', function() {
+		$('#urlCheckBtn').on('click', function() {
+			$('#urlStatusArea').empty();
+			
+			let url = $('#url').val().trim();
+			if (url == '') {
+				$('#urlStatusArea').append('<span class="danger">url이 비어있습니다.</span');
+				return;
+			}
+			
+			$.ajax({
+				// request
+				type:"get"
+				url:"/lesson06/quiz01/isDuplication"
+				data:{"url":url}
+			
+				// response
+				success:function(data) {
+					
+				}	
+				
+			})
+		})
+		
+		
+		
+		
+		$('#addBookmarkBtn').on('click', function() {
 			// validation
 			let name = $("#name").val().trim();
 			if (name == '') {
@@ -46,13 +76,14 @@
 				alert ("url을 입력하세요");
 				return;
 			}
-			if (url.startsWith("http") == false) {
-				alert("url이 잘못되었습니다");
-				return;
-			} else if (url.startsWith("http") == false && url.startsWith("https") == false) {
-				alert("url이 잘못되었습니다");
+			// 주소 형식이 잘못되었을 때 참이 되어야 함
+			// http도 아니고(and), https도 아닐 때
+			if (url.startsWith("http://") == false && url.startsWith("https://") == false) {
+				alert("주소 형식이 잘못 되었습니다");
 				return;
 			}
+			
+			// AJAX 통신 => 서버 요청
 			$.ajax({
 				// request
 				type:"post"
@@ -60,11 +91,11 @@
 				, data: {"name":name, "url":url}
 				
 				// response
-				, success:function(data) {
-					if(data == "성공") {
-						location.href = "/lesson06/quiz01/bookmark_view";
+				, success:function(data) { // data type: String, JSON => 자바스크립트의 객체로 변환
+					if(data.result == "성공") {
+						location.href = "/lesson06/quiz01/bookmark_view"; // GET method
 					} else {
-						alert("실패");
+						alert("즐겨찾기 추가하는데 실패했습니다");
 					}
 				}
 				, error:function(request, status, error) {
@@ -78,7 +109,6 @@
 		})
 		
 	})
-
 </script>	
 </body>
 
