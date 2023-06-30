@@ -27,42 +27,51 @@
 		</div>
 		<div class="form-group">
 			<div>주소</div>
-			<div class="d-flex">
+			<div class="form-inline">
 				<input type="text" class="form-control col-10" id="url">
-				<button type="button" id="urlCheckBtn" class="btn btn-primary ml-3">중복확인</button>
+				<button type="button" id="duplicationBtn" class="btn btn-primary ml-3">중복확인</button>
 			</div>
-			<small id="urlStatusArea"></small>
+			<small id="duplicationText" class="text-danger d-none">중복된 url 입니다.</small>
+			<small id="availableText" class="text-success d-none">저장 가능한 url 입니다.</small>
 		</div>
 		<input type="button" id="addBookmarkBtn" class="btn btn-success btn-block" value="추가">
 	</div>
 	
 <script>
+	// 문제 2-1)
 	$(document).ready(function() {
-		$('#urlCheckBtn').on('click', function() {
-			$('#urlStatusArea').empty();
-			
+		$('#duplicationBtn').on('click', function() {
 			let url = $('#url').val().trim();
-			if (url == '') {
-				$('#urlStatusArea').append('<span class="danger">url이 비어있습니다.</span');
+			if (!url) {
+				alert("검사할 url을 입력해주세요.");
 				return;
 			}
 			
+			// AJAX 통신 => DB URL 존재 여부
+			
 			$.ajax({
 				// request
-				type:"get"
-				url:"/lesson06/quiz01/isDuplication"
-				data:{"url":url}
+				type:"POST"
+				, url:"/lesson06/quiz01/is_Duplication_url"
+				, data:{"url":url}
 			
 				// response
-				success:function(data) {
-					
+				, success:function(data) {
+					// 예) {"code":1, "isDuplcation":true}
+					if (data.isDuplication) { // 중복
+						$('#duplicationText').removeClass('d-none');
+						$('#availableText').addClass('d-none');
+					} else { // 중복아님 (사용가능url)
+						$('#duplicationText').addClass('d-none');
+						$('#availableText').removeClass('d-none');
+					}
 				}	
+				, error:function(request, status, error) {
+					alert("");
+				}
 				
 			})
 		})
-		
-		
-		
 		
 		$('#addBookmarkBtn').on('click', function() {
 			// validation
@@ -80,6 +89,12 @@
 			// http도 아니고(and), https도 아닐 때
 			if (url.startsWith("http://") == false && url.startsWith("https://") == false) {
 				alert("주소 형식이 잘못 되었습니다");
+				return;
+			}
+			
+			// 문제2) 중복확인 체크
+			if ($('#availableText').hasClass('d-none')) { // validation: 잘못된 경우 => availableText가 d-none인 경우
+				alert('중복된 url입니다. 다시 확인해주세요');
 				return;
 			}
 			

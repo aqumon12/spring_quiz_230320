@@ -1,0 +1,9 @@
+@charset "UTF-8";
+header {height:100px;}
+nav {height:40px;}
+.contents {height:600px; overflow:scroll;}
+footer {height:100px;}
+
+.nav-link {background-color:orange; color:white;}
+.nav-link:hover {color:#2EFE2E;}
+.footer-text {font-size:11px; color:gray;}

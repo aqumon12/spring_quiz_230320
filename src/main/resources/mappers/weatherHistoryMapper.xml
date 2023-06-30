@@ -12,7 +12,7 @@
 			, `microDust`
 			, `windSpeed`
 		FROM
-		`weather_history`
+			`weather_history`
 	</select>
 	
 	<insert id="insertWeatherHistory" parameterType="map">

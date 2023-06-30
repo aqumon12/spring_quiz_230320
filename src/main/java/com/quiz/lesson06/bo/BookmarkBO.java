@@ -21,4 +21,12 @@ public class BookmarkBO {
 	public void addBookmark(String name,String url) {
 		bookmarkMapper.insertBookmark(name, url);
 	}
+	
+	public Bookmark getBookmarkByUrl(String url) {
+		return bookmarkMapper.selectBookmarkByUrl(url);
+	}
+	
+	public int deleteBookmarkById(int id) {
+		return bookmarkMapper.deleteBookmarkById(id);
+	}
 }
