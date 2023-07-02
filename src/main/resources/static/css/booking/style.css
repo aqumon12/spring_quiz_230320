@@ -7,3 +7,14 @@ footer {height:100px;}
 .nav-link {background-color:orange; color:white;}
 .nav-link:hover {color:#2EFE2E;}
 .footer-text {font-size:11px; color:gray;}
+.reservation-box {width: 400px;}
+
+.banner {height:500px;}
+
+.reserve {height:250px;}
+.reserve .real-time-reserved {background-color:#B1520F;}
+.reserve .confirm {background-color: #CF6317;}
+.reserve .inquiry {background-color:#B1520F;}
+.reserve-confirm {color:#fff; font-size: 25px; }
+
+.input-form {width:230px; height:30px; margin-left:10px;}

@@ -5,7 +5,8 @@
  <mapper namespace="com.quiz.booking.dao.BookingMapper">
  	<select id="selectBooking" resultType="com.quiz.booking.domain.Booking">
  		SELECT
- 			`name`
+ 			`id`
+ 			, `name`
 			, `headcount`
 			, `day`
 			, `date`
@@ -15,4 +16,50 @@
 			`booking`
  	</select>
  	
+ 	<insert id="insertBooking" parameterType="map">
+ 		INSERT INTO `booking`
+ 		(
+		 	`name`
+			,`headcount`
+			, `day`
+			, `date`
+			, `phoneNumber`
+			, `state`
+			, `createdAt`
+			, `updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{name}
+ 			, #{headcount}
+ 			, #{day}
+ 			, #{date}
+ 			, #{phoneNumber}
+ 			, '대기중'
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<delete id="deleteBookingById" parameterType="int">
+ 		DELETE 
+ 		FROM
+ 			`booking`
+ 		WHERE `id` = #{id}
+ 	</delete>
+ 	
+ 	<select id="selectBookingByName" resultType="com.quiz.booking.domain.Booking">
+ 		SELECT
+ 			`id`
+ 			, `name`
+			, `headcount`
+			, `day`
+			, `date`
+			, `phoneNumber`
+			, `state`
+		FROM
+			`booking`
+		WHERE
+			`name` = #{name} and `phoneNumber` = #{phoneNumber}
+ 	</select>
  </mapper>

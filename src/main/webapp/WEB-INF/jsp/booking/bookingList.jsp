@@ -29,10 +29,10 @@
 		</header>
 		<nav>
 			<ul class="nav nav-fill">
-				<li class="nav-item"><a href="#" class="nav-link">팬션소개</a></li>
+				<li class="nav-item"><a href="/booking/search_booking_view" class="nav-link">팬션소개</a></li>
 				<li class="nav-item"><a href="#" class="nav-link">객실보기</a></li>
-				<li class="nav-item"><a href="#" class="nav-link">예약하기</a></li>
-				<li class="nav-item"><a href="#" class="nav-link">예약목록</a></li>
+				<li class="nav-item"><a href="/booking/make_booking_view" class="nav-link">예약하기</a></li>
+				<li class="nav-item"><a href="/booking/booking_list_view" class="nav-link">예약목록</a></li>
 			</ul>
 		</nav>
 		<section class="contents">
@@ -72,9 +72,7 @@
 										<td class="text-danger">${reservation.state}</td>
 									</c:otherwise>								
 								</c:choose>
-								
-								
-								<td><button type="button" class="btn btn-danger">삭제</button></td>
+								<td><button type="button" class="del-btn btn btn-danger" data-booking-id="${reservation.id}">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>			
@@ -91,7 +89,26 @@
 </body>
 <script>
 	$(document).ready(function() {
-		
+		$('.del-btn').on('click', function() {
+			let id = $(this).data('booking-id');
+			
+			$.ajax({
+				// request
+				type:"delete"
+				, url:"/booking/delete_booking"
+				, data:{'id':id}
+				// response
+				, success:function(data) {
+					if (data == "성공") {
+						location.reload(true);
+					}
+				}
+				, error:function(request, status, error) {
+					
+				}
+			
+			})
+		});
 	});
 
 </script>
