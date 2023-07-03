@@ -48,7 +48,7 @@
  		WHERE `id` = #{id}
  	</delete>
  	
- 	<select id="selectBookingByName" resultType="com.quiz.booking.domain.Booking">
+ 	<select id="selectBookingByNameAndPhoneNumber" parameterType="map" resultType="com.quiz.booking.domain.Booking">
  		SELECT
  			`id`
  			, `name`
@@ -60,6 +60,7 @@
 		FROM
 			`booking`
 		WHERE
-			`name` = #{name} and `phoneNumber` = #{phoneNumber}
+			`name` = #{name} 
+			AND `phoneNumber` = #{phoneNumber}
  	</select>
  </mapper>

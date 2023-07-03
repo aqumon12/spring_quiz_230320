@@ -18,15 +18,21 @@ public class BookingBO {
 		return bookingMapper.selectBooking();
 	};
 	
-	public void addBooking(String name, String date, int day, int headcount, String phoneNumber) {
-		bookingMapper.insertBooking(name, date, day, headcount, phoneNumber);
+	public int addBooking(String name, String date, int day, int headcount, String phoneNumber) {
+		return bookingMapper.insertBooking(name, date, day, headcount, phoneNumber);
 	}
 	
-	public void deleteBookingById(int id) {
-		bookingMapper.deleteBookingById(id);
+	public int deleteBookingById(int id) {
+		return bookingMapper.deleteBookingById(id);
 	}
 	
-	public Booking searchBookingByName(String name, String phoneNumber) {
-		return bookingMapper.selectBookingByName(name, phoneNumber);
+	public Booking searchBookingByNameAndPhoneNumber(String name, String phoneNumber) {
+		// 가능한 값: [], [booking,...]  (null 값 불가능)
+		List<Booking> bookingList = bookingMapper.selectBookingByNameAndPhoneNumber(name, phoneNumber);
+		if (bookingList.isEmpty()) {
+			return null;
+		}
+		
+		return bookingList.get(bookingList.size()-1); // 마지막 값을 준다. (최신 예약)
 	}
 }

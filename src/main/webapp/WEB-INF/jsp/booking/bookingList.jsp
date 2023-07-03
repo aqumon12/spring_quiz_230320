@@ -55,8 +55,7 @@
 							<tr>
 								<td>${reservation.name}</td>
 								<td>
-									<fmt:parseDate value="${reservation.date}" pattern="yyyy-MM-dd" var="date"></fmt:parseDate>
-									<fmt:formatDate value="${date}" pattern="yyyy년 M월 d일" /> 
+									<fmt:formatDate value="${reservation.date}" pattern="yyyy년 M월 d일" /> 
 								</td>
 								<td>${reservation.day}</td>
 								<td>${reservation.headcount}</td>
@@ -99,12 +98,17 @@
 				, data:{'id':id}
 				// response
 				, success:function(data) {
-					if (data == "성공") {
+					// {"code":1, "result":"성공"}
+					if (data.code == 1) {
+						alert("삭제 되었습니다.");
 						location.reload(true);
+					} else {
+						// {"code":500, "errorMessage":"삭제될 데이터가 없습니다."}
+						alert(data.errorMessage);
 					}
 				}
 				, error:function(request, status, error) {
-					
+					alert("삭제하는데 실패했습니다.");
 				}
 			
 			})

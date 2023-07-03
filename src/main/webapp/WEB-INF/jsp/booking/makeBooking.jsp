@@ -21,7 +21,6 @@
 	crossorigin="anonymous"></script>
 	
 	<!-- datepicker -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
@@ -72,12 +71,15 @@
 	
 <script>
 	$(document).ready(function() {
+		// 날짜 선택 데이트 피커
 		$('#date').datepicker({
 			dateFormat:"yy-mm-dd" // 날짜 포맷
+			, minDate:0
 			, changeYear: true
 			, changeMonth: true
 		})
 		
+		// 예약 버튼 클릭
 		$('#reservationBtn').on('click', function() {
 			let name = $('#name').val().trim();
 			let date = $('#date').val().trim();
@@ -90,16 +92,24 @@
 				alert('이름을 입력해주세요');
 				return;
 			}
-			if (date == '') {
+			if (date.length < 1) {
 				alert('예약날짜를 입력해주세요');
 				return;
 			}
-			if (day == '') {
+			if (!day) {
 				alert('숙박일수를 입력해주세요');
+				return;
+			}
+			if (isNaN(day)) { // 숫자가 아닐 때 참
+				alert('숙박일수는 숫자만 입력 가능합니다.');
 				return;
 			}
 			if (headcount == '') {
 				alert('숙박인원을 입력해주세요');
+				return;
+			}
+			if (isNaN(headcount)) { // 숫자가 아닐 때 참
+				alert('숙박인원은 숫자만 입력 가능합니다.');
 				return;
 			}
 			if (phoneNumber == '') {
@@ -107,21 +117,24 @@
 				return;
 			}
 			
-			// AJAX
+			// AJAX - insert
 			$.ajax({
 				// request
-				type:"POST"
+				type:"post"
 				, url:"/booking/add_booking"
 				, data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
 				
 				// response
 				, success:function(data) {
-					if (data == "성공") {
+					if (data.code == 1) {
+						alert("예약 되었습니다.");
 						location.href = "/booking/booking_list_view"
+					} else {
+						alert(data.errorMessage);
 					}
 				}
 				, error:function(request, status, error) {
-					alert("시스템 오류");
+					alert("예약하는데 실패했습니다. 관리자에게 문의해주세요.");
 				}
 				
 				
