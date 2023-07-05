@@ -31,4 +31,18 @@ public class Lesson07Quiz01RestController {
 		
 		return companyBO.addCompany("버블팡", "여신 금융업", "대기업", 6834);
 	}
+	
+	@GetMapping("/update")
+	public CompanyEntity update() {
+		// id:8, 중소기업, 34명
+		
+		return companyBO.updateCompanyById(8, "중소기업", 34);
+	}
+	
+	@GetMapping("/delete")
+	public String delete() {
+		// id:8
+		companyBO.deleteCompanyById(8);
+		return "삭제 완료";
+	}
 }
