@@ -25,9 +25,9 @@ public class Lesson07Quiz02RestController {
 	}
 	
 	@GetMapping("/2")
-	public RecruitEntity getRecruitList2(
-			@RequestParam("id") int id) {
-		return recruitRepository.findById(id).orElse(null);
+	public List<RecruitEntity> getRecruitList2(
+			@RequestParam("companyId") int companyId) {
+		return recruitRepository.findByCompanyId(companyId);
 	}
 	
 	@GetMapping("/3")
@@ -51,8 +51,8 @@ public class Lesson07Quiz02RestController {
 	}
 	@GetMapping("/7")
 	public List<RecruitEntity> getRecruitList7() {
-		LocalDate date = LocalDate.of(2026, 04, 10);
-		return recruitRepository.findList(date, 8100, "정규직");
+		return recruitRepository
+				.findByDeadlineAfterAndSalaryAndTypeOrderBySalaryDesc("2026-04-10", 8100, "정규직");
 	}
 	
 }
